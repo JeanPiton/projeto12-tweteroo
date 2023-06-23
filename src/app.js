@@ -41,10 +41,17 @@ app.post("/tweets",(req,res)=>{
 })
 
 app.get("/tweets",(req,res)=>{
-    
+    let page = parseInt(req.query.page)
+    if(page<=0){
+        res.sendStatus(400)
+        return
+    }
+    if(page == undefined){
+        page = 1
+    }
     let tweet = []
     if(tweets.length>0){
-        for(let i = tweets.length-1;i>=0&&i>=tweets.length-10;i--){
+        for(let i = tweets.length-1-(page-1)*10;i>=0&&i>=tweets.length-page*10;i--){
             tweet.push(tweets[i])
         }
     }
