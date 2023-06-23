@@ -46,9 +46,10 @@ app.get("/tweets",(req,res)=>{
         res.sendStatus(400)
         return
     }
-    if(page == undefined){
+    if(isNaN(page)){
         page = 1
     }
+    console.log(page)
     let tweet = []
     if(tweets.length>0){
         for(let i = tweets.length-1-(page-1)*10;i>=0&&i>=tweets.length-page*10;i--){
