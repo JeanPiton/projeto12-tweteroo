@@ -14,6 +14,10 @@ app.post("/sign-up",(req,res)=>{
         username: req.body.username,
         avatar: req.body.avatar
     }
+    if((!login.username&&typeof login.username=='string')||(!login.avatar&&typeof login.avatar=='string')){
+        res.sendStatus(400)
+        return
+    }
     user = login
     res.status(201).send("OK")
 })
@@ -27,6 +31,10 @@ app.post("/tweets",(req,res)=>{
         username: req.headers.user,
         tweet: req.body.tweet,
         avatar: user.avatar
+    }
+    if((!message.username&&typeof message.username=='string')||(!message.tweet&&typeof message.tweet=='string')){
+        res.sendStatus(400)
+        return
     }
     tweets.push(message)
     res.status(201).send("OK")
