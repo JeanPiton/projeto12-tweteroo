@@ -25,11 +25,18 @@ app.post("/sign-up",(req,res)=>{
 app.post("/tweets",(req,res)=>{
     let username = req.headers.user
     if(!req.headers.user){
+        if(!req.body.username){
+            res.status(401)
+            return
+        }
         username = req.body.username
-        return
     }
     if(user.find(e=>e.username==req.headers.user).length==0){
         res.status(401).send("UNAUTHORIZED")
+        return
+    }
+    if(!req.body.tweet||typeof req.body.tweet!="string"){
+        res.status(401)
         return
     }
     const message = {
