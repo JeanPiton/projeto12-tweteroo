@@ -1,14 +1,15 @@
 import express from "express"
 import cors from "cors"
 
-const user = []
-const tweets = []
+const user = []     //[{username:string, avatar:string}]
+const tweets = []   //[{username:string, tweet:string, avatar:string}]
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 app.listen(5000,()=>console.log("Server running on port 5000"))
 
+//post user
 app.post("/sign-up",(req,res)=>{
     let login = {
         username: req.body.username,
@@ -22,6 +23,7 @@ app.post("/sign-up",(req,res)=>{
     res.status(201).send("OK")
 })
 
+//post tweets
 app.post("/tweets",(req,res)=>{
     let username = req.headers.user
     if(!req.headers.user){
@@ -52,6 +54,7 @@ app.post("/tweets",(req,res)=>{
     res.status(201).send("OK")
 })
 
+//get tweets by pages, default page = 1
 app.get("/tweets",(req,res)=>{
     let page = parseInt(req.query.page)
     if(page<=0){
@@ -71,6 +74,7 @@ app.get("/tweets",(req,res)=>{
     res.send(tweet)
 })
 
+//get tweets by user
 app.get("/tweets/:USERNAME",(req,res)=>{
     let userTweets = tweets.filter(e=>e.username==req.params.USERNAME)
     res.send(userTweets)
