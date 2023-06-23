@@ -31,12 +31,12 @@ app.post("/tweets",(req,res)=>{
         }
         username = req.body.username
     }
-    if(user.find(e=>e.username==req.headers.user).length==0){
+    if(user.find(e=>e.username==username).length==0){
         res.status(401).send("UNAUTHORIZED")
         return
     }
     if(!req.body.tweet||typeof req.body.tweet!="string"){
-        res.status(401)
+        res.sendStatus(401)
         return
     }
     const message = {
