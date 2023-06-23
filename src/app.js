@@ -36,7 +36,7 @@ app.post("/tweets",(req,res)=>{
         return
     }
     if(!req.body.tweet||typeof req.body.tweet!="string"){
-        res.sendStatus(401)
+        res.sendStatus(400)
         return
     }
     const message = {
