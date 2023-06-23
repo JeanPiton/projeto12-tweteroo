@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 
-let user = {username:"", avatar:""}
+const user = []
 const tweets = []
 
 const app = express()
@@ -18,17 +18,22 @@ app.post("/sign-up",(req,res)=>{
         res.sendStatus(400)
         return
     }
-    user = login
+    user.push(login)
     res.status(201).send("OK")
 })
 
 app.post("/tweets",(req,res)=>{
-    if(!user.username){
+    let username = req.headers.user
+    if(!req.headers.user){
+        username = req.body.username
+        return
+    }
+    if(user.find(e=>e.username==req.headers.user).length==0){
         res.status(401).send("UNAUTHORIZED")
         return
     }
     const message = {
-        username: req.headers.user,
+        username: username,
         tweet: req.body.tweet,
         avatar: user.avatar
     }
