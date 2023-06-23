@@ -50,3 +50,8 @@ app.get("/tweets",(req,res)=>{
     }
     res.send(tweet)
 })
+
+app.get("/tweets/:USERNAME",(req,res)=>{
+    let userTweets = tweets.filter(e=>e.username==req.params.USERNAME)
+    res.send(userTweets)
+})
