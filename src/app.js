@@ -35,7 +35,7 @@ app.post("/tweets",(req,res)=>{
     const message = {
         username: username,
         tweet: req.body.tweet,
-        avatar: user.avatar
+        avatar: user.find(e=>e.username == username).avatar
     }
     if((!message.username&&typeof message.username=='string')||(!message.tweet&&typeof message.tweet=='string')){
         res.sendStatus(400)
