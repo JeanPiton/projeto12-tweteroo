@@ -15,12 +15,14 @@ app.post("/sign-up",(req,res)=>{
         avatar: req.body.avatar
     }
     user = login
-    res.sendStatus(200)
+    res.send("OK")
+    res.sendStatus(201)
 })
 
 app.post("/tweets",(req,res)=>{
-    if(!req.body.username){
+    if(!user.username){
         res.send("UNAUTHORIZED")
+        res.sendStatus(401)
     }else{
         const message = {
             username: req.body.username,
@@ -31,7 +33,8 @@ app.post("/tweets",(req,res)=>{
         if(tweets.length>10){
             tweets.shift()
         }
-        res.sendStatus(200)
+        res.send("OK")
+        res.sendStatus(201)
     }
 })
 
