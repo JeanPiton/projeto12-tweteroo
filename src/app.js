@@ -31,7 +31,7 @@ app.post("/tweets",(req,res)=>{
         }
         username = req.body.username
     }
-    if(user.find(e=>e.username==username).length==0){
+    if(user.length==0||user.find(e=>e.username==username).length==0){
         res.status(401).send("UNAUTHORIZED")
         return
     }
