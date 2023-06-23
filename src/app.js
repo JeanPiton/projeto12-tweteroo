@@ -14,7 +14,7 @@ app.post("/sign-up",(req,res)=>{
         username: req.body.username,
         avatar: req.body.avatar
     }
-    if((!login.username&&typeof login.username=='string')||(!login.avatar&&typeof login.avatar=='string')){
+    if((!login.username||typeof login.username!='string')||(!login.avatar||typeof login.avatar!='string')){
         res.sendStatus(400)
         return
     }
