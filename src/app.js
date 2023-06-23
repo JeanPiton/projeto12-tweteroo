@@ -15,29 +15,30 @@ app.post("/sign-up",(req,res)=>{
         avatar: req.body.avatar
     }
     user = login
-    res.send("OK")
-    res.sendStatus(201)
+    res.status(201).send("OK")
 })
 
 app.post("/tweets",(req,res)=>{
     if(!user.username){
-        res.send("UNAUTHORIZED")
-        res.sendStatus(401)
-    }else{
-        const message = {
-            username: req.body.username,
-            tweet: req.body.tweet,
-            avatar: user.avatar
-        }
-        tweets.push(message)
-        if(tweets.length>10){
-            tweets.shift()
-        }
-        res.send("OK")
-        res.sendStatus(201)
+        res.status(401).send("UNAUTHORIZED")
+        return
     }
+    const message = {
+        username: req.headers.user,
+        tweet: req.body.tweet,
+        avatar: user.avatar
+    }
+    tweets.push(message)
+    res.status(201).send("OK")
 })
 
 app.get("/tweets",(req,res)=>{
-    res.send(tweets)
+    
+    let tweet = []
+    if(tweets.length>0){
+        for(let i = tweets.length-1;i>=0&&i>=tweets.length-10;i--){
+            tweet.push(tweets[i])
+        }
+    }
+    res.send(tweet)
 })
